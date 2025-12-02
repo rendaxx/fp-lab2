@@ -146,7 +146,7 @@ defmodule AVLDict do
     node(rk, rv, node(n.key, n.value, n.left, rl), rr)
   end
 
-  defp rebalance(n = %__MODULE__{}) do
+  defp rebalance(%__MODULE__{} = n) do
     bf = balance_factor(n)
 
     cond do

@@ -8,8 +8,8 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      ELIXIR_VERSION: "1.16"
-      OTP_VERSION: "26"
+      ELIXIR_VERSION: "1.19"
+      OTP_VERSION: "27"
 
     steps:
       - name: Checkout repository

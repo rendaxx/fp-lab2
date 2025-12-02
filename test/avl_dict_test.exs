@@ -98,7 +98,7 @@ defmodule AVLDictTest do
   end
 
   property "monoid identity" do
-    check all pairs <- gen_pairs() do
+    check all(pairs <- gen_pairs()) do
       dict = D.from_list(pairs)
       assert D.equal?(dict, D.mappend(dict, D.empty()))
       assert D.equal?(dict, D.mappend(D.empty(), dict))
@@ -106,9 +106,11 @@ defmodule AVLDictTest do
   end
 
   property "monoid associativity" do
-    check all p1 <- gen_pairs(),
-              p2 <- gen_pairs(),
-              p3 <- gen_pairs() do
+    check all(
+            p1 <- gen_pairs(),
+            p2 <- gen_pairs(),
+            p3 <- gen_pairs()
+          ) do
       a = D.from_list(p1)
       b = D.from_list(p2)
       c = D.from_list(p3)
@@ -121,9 +123,11 @@ defmodule AVLDictTest do
   end
 
   property "put/get and delete/has_key? relationships" do
-    check all pairs <- gen_pairs(),
-              key <- integer(),
-              val <- integer() do
+    check all(
+            pairs <- gen_pairs(),
+            key <- integer(),
+            val <- integer()
+          ) do
       dict = D.from_list(pairs)
       with_put = D.put(dict, key, val)
 
@@ -138,7 +142,7 @@ defmodule AVLDictTest do
   end
 
   property "map/2 matches mapping over to_list then rebuilding" do
-    check all pairs <- gen_pairs() do
+    check all(pairs <- gen_pairs()) do
       dict = D.from_list(pairs)
       fun = fn {k, v} -> {k + 1, v * 2} end
 
@@ -153,7 +157,7 @@ defmodule AVLDictTest do
   end
 
   property "filter/2 matches filtering the list representation" do
-    check all pairs <- gen_pairs() do
+    check all(pairs <- gen_pairs()) do
       dict = D.from_list(pairs)
       pred = fn {k, v} -> rem(k, 2) == 0 or v < 0 end
 
@@ -168,7 +172,7 @@ defmodule AVLDictTest do
   end
 
   property "foldl/3 and foldr/3 respect traversal order" do
-    check all pairs <- gen_pairs() do
+    check all(pairs <- gen_pairs()) do
       dict = D.from_list(pairs)
       fun = fn pair, acc -> [pair | acc] end
       list = D.to_list(dict)
